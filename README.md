@@ -10,8 +10,6 @@
 
 단순한 알고리즘 구현을 넘어 Perception, Mapping, Planning으로 이어지는 각 모듈을 독립적인 C++ 노드로 구성하여 실시간 데이터 스트리밍 및 시각화(RViz2) 시스템을 완성했습니다.
 
----
-
 ## 🏗️ System Architecture & Data Flow
 
 시스템은 크게 3개의 독립적인 ROS 2 Node로 구성되며, Topic 기반의 비동기 메시지 패싱 구조를 가집니다.
