@@ -10,31 +10,6 @@
 
 단순한 알고리즘 구현을 넘어 Perception, Mapping, Planning으로 이어지는 각 모듈을 독립적인 C++ 노드로 구성하여 실시간 데이터 스트리밍 및 시각화(RViz2) 시스템을 완성했습니다.
 
-## 🏗️ System Architecture & Data Flow
-
-시스템은 크게 3개의 독립적인 ROS 2 Node로 구성되며, Topic 기반의 비동기 메시지 패싱 구조를 가집니다.
-
-```mermaid
-graph TD;
-    subgraph Perception
-        A[Raw LiDAR .bin] -->|File I/O| B(Nuscenes Publisher Node);
-        B -->|sensor_msgs/PointCloud2| C{RANSAC Ground Segmentation};
-    end
-    
-    subgraph Mapping
-        C -->|/obstacle_points| D(Grid Map Node);
-        C -.->|/ground_points| RViz(RViz2 Visualization);
-        D -->|SE3 to SE2 Projection & Minkowski Dilation| E[Occupancy Grid Map 2D];
-    end
-    
-    subgraph Planning & Control
-        E -->|/occupancy_grid| F(Path Planner Node);
-        Goal[User 2D Goal Pose] -->|/goal_pose| F;
-        F -->|A* Algorithm & Catmull-Rom Spline| G[Smooth Trajectory];
-        G -->|/planned_path| RViz;
-    end
-```
-
 ## 🧠 Core Algorithms & Pipeline
 1. 3D Ground Segmentation (RANSAC)
   - 3차원 공간의 평면 방정식(ax + by + cz + d = 0)을 모델링하여 무작위 샘플링 기반의 RANSAC 알고리즘 적용.
@@ -60,3 +35,30 @@ graph TD;
 🐳 DevOps & Environment Isolation
 - Containerized Development: 의존성 충돌 방지를 위한 Docker 기반의 개발 환경 구축.
 - WSL2 트러블슈팅: 호스트 머신(Windows/Mac)과 Linux 컨테이너 간의 네트워크 브리지 및 X11 포워딩을 통한 RViz2 GUI 시각화 환경 세팅 및 디버깅.
+
+---
+
+## 🏗️ System Architecture & Data Flow
+
+시스템은 크게 3개의 독립적인 ROS 2 Node로 구성되며, Topic 기반의 비동기 메시지 패싱 구조를 가집니다.
+
+```mermaid
+graph TD;
+    subgraph Perception
+        A[Raw LiDAR .bin] -->|File I/O| B(Nuscenes Publisher Node);
+        B -->|sensor_msgs/PointCloud2| C{RANSAC Ground Segmentation};
+    end
+    
+    subgraph Mapping
+        C -->|/obstacle_points| D(Grid Map Node);
+        C -.->|/ground_points| RViz(RViz2 Visualization);
+        D -->|SE3 to SE2 Projection & Minkowski Dilation| E[Occupancy Grid Map 2D];
+    end
+    
+    subgraph Planning & Control
+        E -->|/occupancy_grid| F(Path Planner Node);
+        Goal[User 2D Goal Pose] -->|/goal_pose| F;
+        F -->|A* Algorithm & Catmull-Rom Spline| G[Smooth Trajectory];
+        G -->|/planned_path| RViz;
+    end
+```
