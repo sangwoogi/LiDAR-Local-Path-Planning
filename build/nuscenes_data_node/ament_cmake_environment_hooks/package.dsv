@@ -1,4 +1,0 @@
-source;share/nuscenes_data_node/local_setup.bash
-source;share/nuscenes_data_node/local_setup.dsv
-source;share/nuscenes_data_node/local_setup.sh
-source;share/nuscenes_data_node/local_setup.zsh
