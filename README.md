@@ -38,7 +38,7 @@
 
 ## Env Setting
 ```
-docker push sangwoogi/3d_vision_env:tagname
+docker push sangwoogi/3d_vision_env:latest
 ```
 ---
 
