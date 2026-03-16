@@ -36,6 +36,10 @@
 - Containerized Development: 의존성 충돌 방지를 위한 Docker 기반의 개발 환경 구축.
 - WSL2 트러블슈팅: 호스트 머신(Windows/Mac)과 Linux 컨테이너 간의 네트워크 브리지 및 X11 포워딩을 통한 RViz2 GUI 시각화 환경 세팅 및 디버깅.
 
+## Env Setting
+```
+docker push sangwoogi/3d_vision_env:tagname
+```
 ---
 
 ## 🏗️ System Architecture & Data Flow
